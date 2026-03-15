@@ -1,0 +1,94 @@
+.headings {
+  flex: 1;
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  color: #444;
+  border-left: 3px solid #025feb;
+  // margin: 10px;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 7px;
+}
+
+.basicInfo {
+  margin: 15px;
+}
+
+.readingPanel {
+  flex: 1;
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  border-radius: 10px;
+  width: 100%;
+  border-left-color: aqua;
+  border-left: 3px solid #025feb;
+  margin-top: 25px;
+  margin-left: 2px;
+  // padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 10px;
+  padding-bottom: 7px;
+}
+
+.customerPanel {
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  border-radius: 10px;
+// width: 100%;
+  // margin-top: 25px;
+  // margin-left: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  // padding-bottom: 7px;
+}
+.employeePanel {
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  border-radius: 10px;
+// width: 100%;
+  margin-top: 25px;
+  margin-left: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 7px;
+}
+.debitPanel {
+  border-left: 3px solid #07bc58;
+  // margin-right: 10px;
+}
+
+.creditPanel {
+  border-left: 3px solid #f7aa03;
+}
+
+.expensePanel {
+  border-left: 3px solid #f72403;
+  // margin-right: 10px;
+}
+
+.advancePanel {
+   border-left: 3px solid #3f88f5;
+}
+
+.summaryPanel {
+  border-left: 3px solid #025feb;
+ 
+  margin-top: 15px;
+  padding: 10px;
+}
+
+.summaryBody {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+}
+
+.summaryActions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}

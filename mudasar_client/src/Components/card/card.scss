@@ -1,0 +1,93 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 20px 20px 20px;
+  flex: 1;
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  border-radius: 10px;
+  //   height: 100px;
+
+  //Designing the Top section of card
+  .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    border-bottom: 0.5px solid rgb(230, 227, 227);
+    //Styling the Image inside the card
+    .img {
+      width: 60px;
+      height: 60px;
+    }
+    //styling the title of subscription card
+    .title {
+      color: #878787;
+      padding: 10px 0px;
+    }
+  }
+  //Designing Middle section of card
+  .middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    //Styling the price heading middle
+    .price {
+      font-size: 30px;
+      font-weight: 500;
+      padding: 5px 0px;
+
+      &.blackberry {
+        color: #a737ed;
+      }
+      &.orange {
+        color: #ee833b;
+      }
+      &.cherry {
+        color: #ee2737;
+      }
+    }
+
+    //Designing the items inside middle section of card
+    .items {
+      .icon {
+        font-size: 18px;
+
+        &.positive {
+          color: rgb(13, 218, 13);
+        }
+
+        &.negative {
+          color: red;
+        }
+      }
+      .item {
+        display: flex;
+        justify-content: center;
+        padding: 5px 0px;
+
+        & > p {
+          margin-left: 5px;
+          font-size: 13px;
+        }
+
+        .button {
+          margin-top: 10px;
+          color: #ffffff;
+          &.blackberry {
+            background-color: #a737ed;
+          }
+          &.orange {
+            background-color: #ee833b;
+          }
+          &.cherry {
+            background-color: #ee2737;
+          }
+        }
+      }
+    }
+  }
+}

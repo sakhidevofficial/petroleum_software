@@ -1,0 +1,138 @@
+.report-wrapper {
+  background-color: #f4f6f9;
+  min-height: 100vh;
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.report-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  max-width: 1000px;
+  margin: auto;
+}
+
+.main-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #2d3e50;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding-left: 10px;
+  border-left: 5px solid #2d3e50;
+  color: #2d3e50;
+}
+
+.section.blue .section-title {
+  border-color: #3f80ea;
+  color: #2a4ea1;
+}
+
+.section.red .section-title {
+  border-color: #e05c5c;
+  color: #a12a2a;
+}
+
+.section.green .section-title {
+  border-color: #49a35f;
+  color: #2b7a3f;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.styled-table.full td {
+  width: 25%;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e3e3e3;
+  font-size: 14px;
+}
+
+.styled-table th {
+  background: #f1f3f5;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Center alignment for product names */
+.product-header {
+  text-align: center !important;
+}
+
+.product-cell {
+  text-align: center;
+  font-weight: 600;
+}
+
+.styled-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.bold-row {
+  font-weight: 700;
+  background-color: #eef5ff;
+  color: #1f3d7a;
+}
+
+.green-text {
+  background-color: #e4f8e8 !important;
+  color: #227044 !important;
+}
+.red-text {
+  background-color: #e4f8e8 !important;
+  color: #227044 !important;
+}
+
+.section.yellow .section-title {
+  border-color: #f1c40f;
+  color: #aa8b00;
+}
+
+.summary-box {
+  margin-top: 30px;
+}
+
+.summary-box h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .report-card {
+    padding: 20px;
+  }
+
+  .styled-table th,
+  .styled-table td {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .main-title {
+    font-size: 20px;
+  }
+}

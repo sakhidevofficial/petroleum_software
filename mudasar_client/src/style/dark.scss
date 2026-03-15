@@ -1,0 +1,381 @@
+//Implementing dark mode designing on App
+
+.authApp.dark {
+  background-color: #202124;
+  color: rgb(156, 156, 156);
+
+  .authApp .MuiFormLabel-root {
+    color: #999 !important;
+  }
+  .authApp .MuiInput-root {
+    color: #999 !important;
+  }
+  .authApp .MuiSvgIcon-root {
+    color: #999 !important;
+  }
+  .authApp .MuiInput-root .MuiInput-underline {
+    color: rgb(156, 156, 156);
+  }
+
+            //PHONE INPUT DESINGING IN SIGNUP FORM
+            .react-tel-input .form-control {
+              background: transparent;
+              color: #9c9c9c;
+              width: -webkit-fill-available;
+              height: 40px;
+              border-color: #555
+            }
+            .react-tel-input .flag-dropdown{
+              border-color: #555;
+            }
+            .react-tel-input .country-list {
+              background-color: #202124;         
+              
+              li:hover {
+                background-color: #303134;
+              }
+              li.highlight {
+                background-color: #303134 !important;
+              }
+            }
+            .react-tel-input .country-list::-webkit-scrollbar {
+              width: 4px !important;
+            }
+            .react-tel-input .country-list::-webkit-scrollbar-track {
+              background-color: #9c9c9c !important;
+            }
+            .react-tel-input .country-list::-webkit-scrollbar-thumb {
+              background-color: #333 !important;
+            }
+  //Change Navbar color on dark mode
+  .navbar {
+    color: rgb(156, 156, 156);
+    border-color: #333;
+
+    //Styling search bar in navbar with respect to dark mode
+    .search {
+      border-color: gray;
+    }
+    .brand {
+      color: #999;
+    }
+  }
+
+  //PAGES HEADER DESIGN 
+  .header {
+    .addNewButton {
+      background-color: #00ff00;
+    }
+  }
+  .main {
+    //Styling scroll bar track for dark
+    ::-webkit-scrollbar-track {
+      background-color: #333;
+    }
+
+    //Change Sidebar color on dark mode
+    .sidebar {
+      background-color: #202124;
+      color: rgb(156, 156, 156);
+
+      //Styling the Bottom section
+      .bottom {
+        border-color: #333;
+        //Style list on dark mode
+        .list {
+          background-color: #202124;
+          color: rgb(156, 156, 156);
+          .li,
+          .nestedli {
+            &:hover {
+              background-color: #333;
+            }
+
+            .icon {
+              color: #999;
+            }
+          }
+        }
+      }
+    }
+    .appContainer {
+      //Change grid color of chart
+      .chartGrid {
+        stroke: rgba(228, 228, 228, 0.219);
+      }
+
+      //Implementing designing of dark mode on table
+      .table {
+        background-color: #202124;
+
+        //Styling the table cell
+        .tableCell {
+          color: gray;
+        }
+      }
+
+      //Implementing the designing of dark mode on data Table or Data grid table
+      .datatable {
+        //Styling the data Grid of Data table
+        .dataGrid {
+          color: gray;
+          border: none;
+
+          .MuiPaper-root {
+            background-color: #303134;
+          }
+          //Change color of Header bottom border
+          .MuiDataGrid-columnHeaders {
+            border-bottom: 1px solid #444;
+          }
+          //Remove Outline Data Grid header cell
+          .MuiDataGrid-columnHeader {
+            outline: none;
+          }
+          //Remover Check box cell outline
+          .MuiDataGrid-cellCheckbox {
+            outline: none;
+          }
+          //Change color of Header cell Icon separator
+          .MuiDataGrid-iconSeparator {
+            color: #999;
+          }
+          //Change color of Data Grid bottom border
+          .MuiDataGrid-cell {
+            border-color: #333;
+          }
+
+          .MuiDataGrid-menu {
+            .MuiPaper-root {
+              background-color: #303134 !important;
+            }
+          }
+
+          .MuiDataGrid-cell {
+            outline: none;
+          }
+          //Styling the check box selection color
+          .MuiCheckbox-root {
+            color: #999 !important;
+          }
+          //Styling the check box selection color
+          .MuiCheckbox-root.Mui-checked {
+            color: red !important;
+          }
+
+          //DataGrid Mui Menu Icon
+          .MuiIconButton-root {
+            color: rgb(156, 156, 156);
+          }
+
+          //Change color of border top of footer
+          .MuiDataGrid-footerContainer {
+            border-color: #444;
+          }
+          // Styling DataGrid Paginnation on dark mode
+          .MuiTablePagination-displayedRows {
+            color: rgb(156, 156, 156);
+          }
+
+          .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1 {
+            background-color: #202124 !important;
+          }
+
+          //Styling the buttons and status cell
+          .viewButton,
+          .deleteButton {
+            color: gray;
+            border: none;
+            background-color: #303134;
+          }
+
+          .cellWithStatus {
+            color: gray;
+            border: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.MuiBox-root {
+  .MuiPaper-root {
+    background-color: #303134 !important;
+    color: #999 !important;
+  }
+}
+//Designing of UnAuth App on dark mode
+.unAuthApp.dark {
+  background-color: #202124;
+  color: rgb(156, 156, 156);
+
+
+
+
+
+  //Change Navbar color on dark mode
+  .navbar {
+    color: rgb(156, 156, 156);
+    border-color: #333;
+
+    //Styling logo inside Navbar
+    .brand {
+      color: #999;
+    }
+    .navlinkBtn {
+      border-color: #999 !important;
+      color: rgb(156, 156, 156) !important;
+    }
+  }
+  .login {
+    .loginForm {
+      //Style TextField Label
+      .MuiFormLabel-root {
+        color: #9c9c9c;
+      }
+      // MUI TEXT INPUT AUTO FILL STYLING
+      .css-p51h6s-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill {
+         -webkit-box-shadow: 0 0 0 100px transparent inset; 
+        -webkit-text-fill-color: #999;
+        }
+      //Style Input Text
+      .MuiOutlinedInput-root {
+        color: rgb(156, 156, 156);
+        background-color: transparent;
+
+        //Styling MUI Text Field on auto compelete
+        input:-webkit-autofill,
+        input:-webkit-autofill:focus {
+          transition: background-color 600000s 0s, color 600000s 0s;
+        }
+        input[data-autocompleted] {
+          background-color: transparent !important;
+        }
+      }
+
+      //Style Text Field Outline on Focus & Normal
+      .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+      .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+        border-color: #999;
+      }
+
+      .forgotPassword {
+        a {
+          color: #999;
+        }
+      }
+
+      //Style Login Button
+      .loginBtn {
+        background-color: #303134;
+        color: #999;
+      }
+    }
+    .copyrightText {
+      color: #9c9c9c;
+    }
+  }
+
+  .signup {
+
+    //AUTO FILL FORM STYLING
+          .MuiOutlinedInput-root {
+            color: #9c9c9c !important;
+            background-color: transparent !important;
+        
+            //Styling MUI Text Field on auto compelete
+            input:-webkit-autofill,
+            input:-webkit-autofill:focus {
+              transition: background-color 600000s 0s, color 600000s 0s !important;
+            }
+            input[data-autocompleted] {
+              background-color: transparent !important;
+            }
+          }
+          //PHONE INPUT DESINGING IN SIGNUP FORM
+          .react-tel-input .form-control {
+            background: transparent;
+            color: #9c9c9c;
+            width: -webkit-fill-available;
+            height: 40px;
+          }
+          .react-tel-input .country-list {
+            background-color: #202124;         
+            
+            li:hover {
+              background-color: #303134;
+            }
+            li.highlight {
+              background-color: #303134 !important;
+            }
+          }
+          .react-tel-input .country-list::-webkit-scrollbar {
+            width: 4px !important;
+          }
+          .react-tel-input .country-list::-webkit-scrollbar-track {
+            background-color: #9c9c9c !important;
+          }
+          .react-tel-input .country-list::-webkit-scrollbar-thumb {
+            background-color: #333 !important;
+          }
+      
+      
+       //Style TextField Label
+      .MuiFormLabel-root {
+        color: hsl(0, 0%, 61%);
+      }
+
+     
+ 
+    //Style Stepper Label
+    .MuiStepLabel-root .Mui-completed {
+      color: rgb(13, 218, 13);
+    }
+
+    .MuiStepLabel-root .Mui-active {
+      color: #999;
+    }
+
+    .MuiStepLabel-root .Mui-disabled,
+    .Mui-disabled .MuiStepIcon-root {
+      color: #555;
+    }
+   
+    //Text Field Input label on focus
+    .MuiInputLabel-root.Mui-focused {
+      color: #999 !important;
+    }
+     //Style TextField Label
+     .MuiFormLabel-root {
+      color: rgb(156, 156, 156);
+    }
+
+    //Style Text Field Outline on Focus & Normal
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+    .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+      border-color: #999;
+    }
+
+    //Style Login Button
+    .signupBtn {
+      background-color: #303134;
+      color: #999;
+    }
+
+    //Style Copyright Text
+    .copyrightText {
+      color: rgb(156, 156, 156);
+    }
+
+    //Style Subscription cards inside signup page
+    .card {
+      .top {
+        border-color: #444;
+      }
+    }
+  }
+ 
+
+}
+

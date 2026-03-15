@@ -1,0 +1,13 @@
+{
+  "mongoURI": "mongodb+srv://mudasarfillingstation:Qamarraza%4012@cluster0.xs191.mongodb.net/mudasarfuel",
+  "jwtSecret": "fruits",
+  "PORT": 5000,
+  "jazzcashMerchantId": "MC53243",
+  "jazzcashPassword": "0w3u9g0twf",
+  "integritySalt": "1v5vf9b2yy",
+  "jazzcashCurrencyCode": "PKR",
+  "jazzcashLanguage": "EN",
+  "jazzcashApiVersion": "1.1",
+  "jazzcashReturnUrl": "http://localhost/api/purplans",
+  "jazzcashHttpPostUrl": "https://sandbox.jazzcash.com.pk/ApplicationAPI/API/Payment/DoTransaction"
+}

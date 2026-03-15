@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Report</title>
+    <style>
+      body {
+        background-color: #f4f6f9;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        padding: 10px;
+        margin: 0;
+        font-size: 11px; /* 12pt = 16px */
+      }
+
+      .report-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .main-title {
+        text-align: center;
+        font-size: 16px; /* 18pt */
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: #2d3e50;
+      }
+
+      .section {
+        margin-bottom: 35px;
+        page-break-inside: avoid;
+      }
+
+      .section-title {
+        font-size: 15px; /* 15pt */
+        font-weight: 600;
+        margin-bottom: 15px;
+        padding-left: 12px;
+        border-left: 5px solid #2d3e50;
+        color: #2d3e50;
+        page-break-after: avoid;
+      }
+
+      .section.blue .section-title {
+        border-color: #3f80ea;
+        color: #2a4ea1;
+      }
+
+      .section.red .section-title {
+        border-color: #e05c5c;
+        color: #a12a2a;
+      }
+
+      .section.green .section-title {
+        border-color: #49a35f;
+        color: #2b7a3f;
+      }
+
+      .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 25px;
+        page-break-inside: avoid;
+        font-size: 11px; /* 12pt */
+      }
+
+      .styled-table.full td {
+        width: 25%;
+      }
+
+      .styled-table th,
+      .styled-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid #e3e3e3;
+        text-align: left;
+      }
+
+      .styled-table th {
+        background: #f1f3f5;
+        font-weight: 600;
+        color: #333;
+        font-size: 13px; /* 12pt */
+      }
+
+      .styled-table tr:nth-child(even) {
+        background-color: #fafafa;
+      }
+
+      .bold-row {
+        font-weight: 700;
+        background-color: #eef5ff;
+        color: #1f3d7a;
+        font-size: 12px; /* 12pt */
+      }
+
+      .green-text {
+        background-color: #e4f8e8 !important;
+        color: #227044 !important;
+      }
+
+      .blue-text {
+        background-color: #eef5ff !important;
+        color: #1f3d7a !important;
+      }
+
+      .red-text {
+        background-color: #fce8e8 !important;
+        color: #a12a2a !important;
+      }
+
+      .header-info {
+        margin-bottom: 30px;
+        page-break-after: avoid;
+      }
+
+      .header-info p {
+        margin: 8px 0;
+        font-size: 15px; /* 12pt */
+      }
+
+      .page-break {
+        page-break-after: always;
+      }
+
+      .avoid-break {
+        page-break-inside: avoid;
+      }
+
+      .first-page-tables {
+        page-break-inside: avoid;
+        margin-bottom: 30px;
+      }
+      @media print {
+        body {
+          padding: 0;
+          background: none;
+          font-size: 15px; /* Maintain 12pt in print */
+        }
+
+        .report-card {
+          box-shadow: none;
+          border-radius: 0;
+          padding: 20px;
+        }
+
+        .main-title {
+          font-size: 15px; /* Maintain 18pt in print */
+        }
+
+        .section-title {
+          font-size: 15px; /* Maintain 15pt in print */
+        }
+
+        .styled-table th,
+        .styled-table td {
+          padding: 10px 14px;
+          font-size: 11px; /* Maintain 12pt in print */
+        }
+
+        .header-info p {
+          font-size: 13px; /* Maintain 12pt in print */
+        }
+      }
+
+      @page {
+        size: Legal;
+        margin: 10mm 10mm;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="report-card">
+      <h1 class="main-title">Daily Sales Report</h1>
+
+      <div class="header-info">
+        <p><strong>Cashier: <%= cashier %></strong></p>
+        <p><strong>Shift: <%= shift %></strong></p>
+        <p><strong>Date: <%= date %></strong></p>
+      </div>
+
+      <% let totalPetrolSale=0; let totalPetrolAmount=0; let totalDieselSale=0;
+      let totalDieselAmount=0; let totalDieselTest = 0; let totalPetrolTest = 0;
+      let petrolPrice = 0; let dieselPrice = 0; const roundValue = (value,
+      decimals = 2) => { if (isNaN(value)) return 0; const factor = Math.pow(10,
+      decimals); return Math.round(value * factor) / factor; } %>
+
+      <!-- Fuel Sales Table -->
+      <div class="section">
+        <h2 class="section-title">Petrol & Diesel Entries</h2>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Machine</th>
+              <th>Prev Reading</th>
+              <th>New Reading</th>
+              <th>Total Liters Sale</th>
+              <th>Total Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% products.forEach(function(item, i) {
+            if(item.product.type==="petrol" ){ %>
+            <tr>
+              <% if(i==0 || i==4 ) {%>
+              <td rowspan="4">Petrol</td>
+              <% }%> <% totalPetrolSale += roundValue(item.newReading -
+              item.prevReading); totalPetrolAmount +=
+              roundValue((item.newReading - item.prevReading) *
+              item.price.newSellingPrice);
+              totalPetrolTest =
+              roundValue(item.testEntry || 0); 
+              petrolPrice = roundValue(item.price.newSellingPrice); %>
+
+              <td><%= item.machine.name%></td>
+              <td><%= roundValue(item.prevReading); %></td>
+              <td><%= roundValue(item.newReading); %></td>
+              <td><%= roundValue(item.newReading - item.prevReading) %></td>
+              <td>
+                <%= roundValue((item.newReading - item.prevReading) *
+                item.price.newSellingPrice) %>
+              </td>
+            </tr>
+            <%}}) %>
+            <tr>
+              <td>Total Dispensed</td>
+              <td><%= roundValue(totalPetrolSale); %></td>
+              <td>Test Quantity</td>
+              <td><%= roundValue(totalPetrolTest); %></td>
+              <td>Total Sale</td>
+              <td><%= roundValue(totalPetrolSale - totalPetrolTest); %></td>
+            </tr>
+            <tr class="bold-row">
+              <td colspan="4">Net Totals</td>
+              <td><%= roundValue(totalPetrolSale - totalPetrolTest) %></td>
+              <td>
+                <%= (roundValue((totalPetrolSale - totalPetrolTest) *
+                petrolPrice)).toLocaleString('en-US', { style: 'currency' ,
+                currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 })%>
+              </td>
+            </tr>
+            <% products.forEach(function(item, i) {
+            if(item.product.type==="diesel" ){ totalDieselSale += roundValue(item.newReading
+            - item.prevReading); 
+            totalDieselAmount += roundValue((item.newReading - item.prevReading) * item.price.newSellingPrice); 
+            totalDieselTest = roundValue(item.testEntry || 0); 
+            dieselPrice = roundValue(item.price.newSellingPrice); %>
+            <tr>
+              <% if(i==4 || i==0 ) {%>
+              <td rowspan="4">Diesel</td>
+              <% }%>
+              <td><%= item.machine.name%></td>
+              <td><%= roundValue(item.prevReading); %></td>
+              <td><%= roundValue(item.newReading);%></td>
+              <td><%= roundValue(item.newReading - item.prevReading); %></td>
+              <td>
+                <%= roundValue((item.newReading - item.prevReading) *
+                item.price.newSellingPrice); %>
+              </td>
+            </tr>
+            <% }}); %>
+            <tr>
+              <td>Total Dispensed</td>
+              <td><%= roundValue(totalDieselSale) %></td>
+              <td>Test Quantity</td>
+              <td><%= roundValue(totalDieselTest) %></td>
+              <td>Total Sale</td>
+              <td><%= roundValue(totalDieselSale - totalDieselTest); %></td>
+            </tr>
+            <tr class="bold-row">
+              <td colspan="4">Total</td>
+              <td><%= roundValue(totalDieselSale - totalDieselTest); %></td>
+              <td>
+                <%= (roundValue((totalDieselSale - totalDieselTest) *
+                dieselPrice)).toLocaleString('en-US', { style: 'currency' ,
+                currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }); %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Product Sales Table -->
+      <div class="section">
+        <h2 class="section-title">Lubricant Product Entries</h2>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let totalMobileSale=0; let totalMobileAmount=0;
+            mobileProducts.forEach(function(item, i){ totalMobileSale
+            += roundValue(item.items.quantity); 
+            totalMobileAmount += roundValue(item.items.quantity *
+            item.price.newSellingPrice); %>
+            <tr>
+              <td><%= item.product.name %></td>
+              <td><%= roundValue(item.items.quantity) %></td>
+              <td>
+                <%= roundValue(item.items.quantity * item.price.newSellingPrice)
+                %>
+              </td>
+            </tr>
+            <% }) %>
+            <tr class="bold-row">
+              <td>Total</td>
+              <td><%= totalMobileSale %></td>
+              <td>
+                <%= totalMobileAmount.toLocaleString('en-US', { style:
+                'currency' , currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Reading Stocks -->
+      <div class="section blue">
+        <h2 class="section-title">Machine Reading Wise Stock Entries</h2>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Stock</th>
+              <th>S.Price</th>
+              <th>Previous</th>
+              <th>Current</th>
+              <th>Dispensed</th>
+              <th>Fuel Test</th>
+              <th>Total Sale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% const maxStockLength=Math.max(expenses.length, stocks.length);
+            let totalStockExpense=0; for (let i=0; i < maxStockLength; i++) {
+            totalStockExpense +=expenses[i] ? roundValue(expenses[i].amount) : 0; %>
+            <tr>
+              <td><%= stocks[i] ? stocks[i].productName : '' %></td>
+              <td><%= stocks[i] ? roundValue(stocks[i].newSellingPrice) : 0; %></td>
+              <td><%= stocks[i] ? roundValue(stocks[i].prevStock) : 0; %></td>
+              <td><%= stocks[i] ? roundValue(stocks[i].newStock) : 0; %></td>
+              <td>
+                <%= stocks[i] ? roundValue((stocks[i].prevStock -
+                stocks[i].newStock) + (stocks[i].testEntry || 0) ): 0 %>
+              </td>
+              <td><%= stocks[i] ? roundValue(stocks[i].testEntry): 0; %></td>
+              <td>
+                <%= stocks[i] ? roundValue((stocks[i].prevStock -
+                stocks[i].newStock) ): 0; %>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      
+
+      <!-- Dip Stock Entries -->
+      <div class="section blue" style="margin-top: 100px !important">
+        <h2 class="section-title">Dip Reading Wise Stock Entries</h2>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Last Dip</th>
+              <th>Last Stock</th>
+              <th>Current Dip</th>
+              <th>Current Stock</th>
+              <th>Difference Stock</th>
+              <th>Gain</th>
+              <th>Gain Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let k=0; k < dips.length; k++) { %>
+            <tr>
+              <td><%= dips[k] ? dips[k].productName : '' %></td>
+              <td><%= dips[k] ? dips[k].lastDip : '' %></td>
+              <td><%= dips[k] ? roundValue(dips[k].lastStock) : 0; %></td>
+              <td><%= dips[k] ? dips[k].currentDip : '' %></td>
+              <td><%= dips[k] ? roundValue(dips[k].currentStock) : 0; %></td>
+              <td><%= dips[k] ? roundValue(dips[k].stockDifference) : 0; %></td>
+              <td><%= dips[k] ? roundValue(dips[k].gain) : 0; %></td>
+              <td><%= dips[k] ? roundValue(dips[k].totalAmount) : 0; %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+        <!-- Staff advance and return -->
+      <div class="section">
+        <h2 class="section-title">Staff Advance and Return Advance Entries</h2>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Staff Advance</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Staff Debit</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let totalStaffAdvance=0; let totalStaffAdvanceReturn=0; const
+            maxStaffLen=Math.max(employeeCredit.length, employeeDebit.length);
+            for (let k=0; k < maxStaffLen; k++) { 
+              totalStaffAdvance +=(employeeCredit[k].amount ? roundValue(employeeCredit[k].amount) : 0);
+            totalStaffAdvanceReturn +=employeeDebit[k] ?
+            roundValue(employeeDebit[k].amount): 0; %>
+            <tr>
+              <td>
+                <%= employeeCredit[k] ? employeeCredit[k].employeeName : '' %>
+              </td>
+              <td>
+                <%= employeeCredit[k] ? employeeCredit[k].description : '' %>
+              </td>
+              <td><%= employeeCredit[k] ? roundValue(employeeCredit[k].amount) : 0; %></td>
+              <td>
+                <%= employeeDebit[k] ? employeeDebit[k].employeeName : '' %>
+              </td>
+              <td><%= employeeDebit[k] ? roundValue(employeeDebit[k].amount) : 0 %></td>
+            </tr>
+            <% } %>
+            <tr class="bold-row">
+              <td colspan="2">Total</td>
+              <td>
+                <%= totalStaffAdvance.toLocaleString('en-US', { style:
+                'currency' , currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) %>
+              </td>
+              <td>Total</td>
+              <td>
+                <%= totalStaffAdvanceReturn.toLocaleString('en-US', { style:
+                'currency' , currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Optional page break after first major sections -->
+      <div class="page-break"></div>
+      <!-- Customer Credit & Debit -->
+      <div class="section" >
+        <h2 class="section-title">Customer Purchase and Debit Entries</h2>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Credit Customer</th>
+              <th>Product</th>
+              <th>Amount</th>
+              <th>Debit Customer</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let totalCreditAmount=0; let totalDebitAmount=0; const
+            maxLen=Math.max(sales.length, payments.length); for (let k=0; k <
+            maxLen; k++) { totalCreditAmount
+            +=((sales[k].totalCreditAmount===null ) ? roundValue(sales[k].totalAmount) :
+            roundValue(sales[k].totalCreditAmount)); totalDebitAmount +=payments[k] ?
+            roundValue(payments[k].payingAmount): 0; %>
+            <tr>
+              <td><%= sales[k] ? sales[k].customer.name : '' %></td>
+              <td>
+                <%= (sales[k] && sales[k].product!==null ) ? sales[k].product :
+                '' %>
+              </td>
+              <td>
+                <%= sales[k] ? ((sales[k].totalCreditAmount===null ) ?
+                roundValue(sales[k].totalAmount) : roundValue(sales[k].totalCreditAmount)) : 0 %>
+              </td>
+              <td><%= payments[k] ? payments[k].customer.name : '' %></td>
+              <td><%= payments[k] ? roundValue(payments[k].payingAmount) : 0 %></td>
+            </tr>
+            <% } %>
+            <tr class="bold-row">
+              <td colspan="2">Total</td>
+              <td>
+                <%= totalCreditAmount.toLocaleString('en-US', { style:
+                'currency' , currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) %>
+              </td>
+              <td>Total</td>
+              <td>
+                <%= totalDebitAmount.toLocaleString('en-US', { style: 'currency'
+                , currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Expense & Customer Advance -->
+      <div class="section red">
+        <h2 class="section-title">Expense and Customer Advance</h2>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Expense</th>
+              <th>Amount</th>
+              <th>Customer</th>
+              <th>Description</th>
+              <th>Advance Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% const maxLength=Math.max(expenses.length,
+            customerAdvance.length); let totalExpense=0; let
+            totalCustomerAdvance=0; for (let i=0; i < maxLength; i++) {
+            totalExpense +=expenses[i] ? roundValue(expenses[i].amount) : 0;
+
+            totalCustomerAdvance += customerAdvance[i] ?
+            roundValue(customerAdvance[i].amount) : 0 %>
+            <tr>
+              <td><%= expenses[i] ? expenses[i].name : '' %></td>
+              <td><%= expenses[i] ? roundValue(expenses[i].amount) : 0; %></td>
+              <td>
+                <%= customerAdvance[i] ? customerAdvance[i].customerName : '' %>
+              </td>
+              <td>
+                <%= customerAdvance[i] ? customerAdvance[i].description : '' %>
+              </td>
+              <td><%= customerAdvance[i] ? roundValue(customerAdvance[i].amount): 0; %></td>
+            </tr>
+            <% } %>
+            <tr class="bold-row red-text">
+              <td>Total</td>
+              <td>
+                <%= totalExpense.toLocaleString('en-US', { style: 'currency' ,
+                currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) %>
+              </td>
+              <td colspan="2">Total</td>
+              <td>
+                <%= totalCustomerAdvance.toLocaleString('en-US', { style:
+                'currency' , currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Financial Summary -->
+      <div class="section green">
+        <h2 class="section-title">Daily Report Summary</h2>
+        <table class="styled-table">
+          <tbody>
+            <% 
+            let saleAmountAllProducts = roundValue(totalDieselAmount + totalPetrolAmount + totalMobileAmount); 
+            let netDieselAmount = (roundValue((totalDieselSale - totalDieselTest) * dieselPrice)); 
+            let netPetrolAmount = (roundValue((totalPetrolSale - totalPetrolTest) * petrolPrice)); 
+            %>
+            <tr>
+              <td>Petrol Amount</td>
+              <td>
+                <%= (roundValue((totalPetrolSale - totalPetrolTest) *
+                petrolPrice)) || 0; %>
+              </td>
+              <td>Customer Credit</td>
+              <td><%= roundValue(totalCreditAmount) || 0; %></td>
+            </tr>
+            <tr>
+              <td>Diesel Amount</td>
+              <td>
+                <%= (roundValue((totalDieselSale - totalDieselTest) *
+                dieselPrice)) || 0; %>
+              </td>
+              <td>Customer Advance</td>
+              <td><%= roundValue(totalCustomerAdvance) || 0; %></td>
+            </tr>
+            <tr>
+              <td>Lubricant Amount</td>
+              <td><%= roundValue(totalMobileAmount) || 0; %></td>
+              <td>Staff Advance</td>
+              <td><%= roundValue(totalStaffAdvance) || 0; %></td>
+            </tr>
+            <tr class="bold-row blue-text">
+              <td>Total Sale Amount</td>
+              <td>
+                <%= (netPetrolAmount + netDieselAmount +
+                totalMobileAmount).toLocaleString('en-US', { style: 'currency' ,
+                currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) || 0 %>
+              </td>
+              <td>Expense</td>
+              <td><%= roundValue(totalExpense) || 0; %></td>
+            </tr>
+            <tr>
+              <td>Customer Debit</td>
+              <td><%= roundValue(totalDebitAmount) || 0; %></td>
+              <td>POS Machine</td>
+              <td><%= roundValue(posMachine) || 0; %></td>
+            </tr>
+            <tr>
+              <td>Staff Debit</td>
+              <td><%= roundValue(totalStaffAdvanceReturn) || 0 %></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="bold-row">
+              <td>Total Recovery</td>
+              <td>
+                <%= roundValue(totalDebitAmount + totalStaffAdvanceReturn) || 0
+                %>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="bold-row green-text">
+              <td>Total Debit</td>
+              <td>
+                <%= (totalDebitAmount + totalStaffAdvanceReturn +
+                netPetrolAmount + netDieselAmount +
+                totalMobileAmount).toLocaleString('en-US', { style: 'currency' ,
+                currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) || 0 %>
+              </td>
+              <td class="red-text">Total Credit</td>
+              <td class="red-text">
+                <%= (totalCreditAmount + totalCustomerAdvance +
+                totalStaffAdvance + totalExpense +
+                posMachine).toLocaleString('en-US', { style: 'currency' ,
+                currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) || 0 %>
+              </td>
+            </tr>
+            <tr class="bold-row green-text">
+              <td colspan="3">Cash In Hand</td>
+              <td>
+                <%= ((totalDebitAmount + totalStaffAdvanceReturn +
+                netPetrolAmount + netDieselAmount + totalMobileAmount) -
+                (totalCreditAmount + totalCustomerAdvance + totalStaffAdvance +
+                totalExpense + posMachine)).toLocaleString('en-US', { style:
+                'currency' , currency: 'PKR' , minimumFractionDigits: 2,
+                maximumFractionDigits: 2 }) || 0 %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

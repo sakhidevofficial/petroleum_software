@@ -1,0 +1,269 @@
+
+    <p style="margin: 0px"><strong>Title: <%= title %></strong> </p>
+    <p style="margin: 5px"><strong>Cashier: <%= cashier %></strong> </p>
+    <p style="margin: 5px"><strong>Shift: <%= shift %></strong> </p>
+    <p style="margin: 5px"><strong>Date: <%= date %></strong> </p>
+
+    <% let totalPetrolSale=0; let totalPetrolAmount=0; let totalDieselSale=0; let totalDieselAmount=0; %>
+        <!-- Fuel Sales Table -->
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Machine</th>
+                <th>Prev Reading</th>
+                <th>New Reading</th>
+                <th>Total Liters Sale</th>
+                <th>Total Amount</th>
+            </tr>
+            <% products.forEach(function(item, i) { if(item.product.type==="petrol" ){ %>
+
+                <tr>
+
+                    <% if(i==0 || i==4 ) {%>
+                        <td rowspan="4">Petrol</td>
+                        <% }%>
+                            <% totalPetrolSale +=item.newReading - item.prevReading; totalPetrolAmount
+                                +=((item.newReading - item.prevReading) * item.price.newSellingPrice) %>
+                                <td>
+                                    <%= item.machine.name%>
+                                </td>
+                                <td>
+                                    <%= item.prevReading%>
+                                </td>
+                                <td>
+                                    <%= item.newReading%>
+                                </td>
+                                <td>
+                                    <%= item.newReading - item.prevReading %>
+                                </td>
+                                <td>
+                                    <%= (item.newReading - item.prevReading) * item.price.newSellingPrice %>
+                                </td>
+                </tr>
+
+                <%}}) %>
+                    <tr class="total">
+                        <td colspan="4">Total</td>
+                        <td>
+                            <%= totalPetrolSale %>
+                        </td>
+                        <td>
+                            <%= totalPetrolAmount.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                                minimumFractionDigits: 2, maximumFractionDigits: 2 })%>
+                        </td>
+                    </tr>
+                    <% products.forEach(function(item, i) { if(item.product.type==="diesel" ){ totalDieselSale
+                        +=item.newReading - item.prevReading; totalDieselAmount +=((item.newReading - item.prevReading)
+                        * item.price.newSellingPrice) %>
+                        <tr>
+                            <% if(i==4 || i==0 ) {%>
+                                <td rowspan="4">Diesel</td>
+                                <% }%>
+
+                                    <td>
+                                        <%= item.machine.name%>
+                                    </td>
+                                    <td>
+                                        <%= item.prevReading%>
+                                    </td>
+                                    <td>
+                                        <%= item.newReading%>
+                                    </td>
+                                    <td>
+                                        <%= item.newReading - item.prevReading %>
+                                    </td>
+                                    <td>
+                                        <%= ((item.newReading - item.prevReading) * item.price.newSellingPrice) %>
+                                    </td>
+                        </tr>
+                        <% }}); %>
+                            <tr class="total">
+                                <td colspan="4">Total</td>
+                                <td>
+                                    <%= totalDieselSale %>
+                                </td>
+                                <td>
+                                    <%= totalDieselAmount.toLocaleString('en-US', { style: 'currency' , currency: 'PKR'
+                                        , minimumFractionDigits: 2, maximumFractionDigits: 2 })%>
+                                </td>
+                            </tr>
+        </table>
+        <!-- Mobile Product Sales Table -->
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+            </tr>
+            <% let totalMobileSale=0; let totalMobileAmount=0; mobileProducts.forEach(function(item, i){ totalMobileSale
+                +=item.items.quantity; totalMobileAmount +=item.items.quantity * item.price.newSellingPrice %>
+
+                <tr>
+                    <td>
+                        <%= item.product.name %>
+                    </td>
+                    <td>
+                        <%= item.items.quantity %>
+                    </td>
+                    <td>
+                        <%= item.items.quantity * item.price.newSellingPrice %>
+                    </td>
+                </tr>
+                <% }) %>
+
+                    <tr class="total">
+                        <td>Total</td>
+                        <td>
+                            <%= totalMobileSale %>
+                        </td>
+                        <td>
+                            <%= totalMobileAmount.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                        </td>
+                    </tr>
+        </table>
+
+        <!-- Expense & Credit/Debit Customers -->
+        <table>
+            <tr>
+                <td class="section-title" style="background-color: #ec8484">Expense</td>
+                <td class="section-title" style="background-color: #ec8484">Amount</td>
+                <td class="section-title" style="background-color: #9e9eff;">Stock</td>
+                <td class="section-title" style="background-color: #9e9eff;">Previous</td>
+                <td class="section-title" style="background-color: #9e9eff;">Current</td>
+                <td class="section-title" style="background-color: #9e9eff;">Total</td>
+                <!-- <td class="section-title">Debit Customer</td>
+            <td class="section-title">Amount</td> -->
+            </tr>
+            <% const maxLength=Math.max(expenses.length, stocks.length); let totalExpense=0; for (let i=0; i <
+                maxLength; i++) { totalExpense +=expenses[i] ? expenses[i].amount : 0 %>
+                <tr>
+                    <td>
+                        <%= expenses[i] ? expenses[i].name : '' %>
+                    </td>
+                    <td>
+                        <%= expenses[i] ? expenses[i].amount : '' %>
+                    </td>
+                    <td>
+                        <%= stocks[i] ? stocks[i].product.name : '' %>
+                    </td>
+                    <td>
+                        <%= stocks[i] ? stocks[i].prevStock : '' %>
+                    </td>
+                    <td>
+                        <%= stocks[i] ? stocks[i].newStock: '' %>
+                    </td>
+                    <td>
+                        <%= stocks[i] ? (stocks[i].prevStock - stocks[i].newStock): '' %>
+                    </td>
+                </tr>
+                <% } %>
+                    <tr style="background-color: #ec8484; font-weight: 600;">
+                        <td>Total</td>
+                        <td>
+                            <%= totalExpense.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                        </td>
+                    </tr>
+        </table>
+
+        <!-- Stock stock & Debit Customers -->
+        <table>
+            <tr>
+                <td class="section-title" style="background-color: #f1c186">Credit Customer</td>
+                <td class="section-title" style="background-color: #f1c186">Amount</td>
+                <td class="section-title" style="background-color: #98D890">Debit Customer</td>
+                <td class="section-title" style="background-color: #98D890">Amount</td>
+                <!-- <td class="section-title">Debit Customer</td>
+            <td class="section-title">Amount</td> -->
+            </tr>
+            <% 
+            let totalCreditAmount=0; 
+            let totalDebitAmount=0; 
+            const maxLen=Math.max(sales.length, payments.length);
+                for (let k=0; k < maxLen; k++) { 
+                    totalCreditAmount +=((sales[k].totalCreditAmount===null ) ? sales[k].totalAmount : sales[k].totalCreditAmount); 
+                    totalDebitAmount +=payments[k] ? payments[k].amount: 0; 
+                %>
+                <tr>
+                    <td>
+                        <%= sales[k] ? sales[k].customer.name : '' %>
+                    </td>
+                    <td>
+                        <%= sales[k] ? ((sales[k].totalCreditAmount===null ) ? sales[k].totalAmount :
+                            sales[k].totalCreditAmount) : '' %>
+                    </td>
+                    <td>
+                        <%= payments[k] ? payments[k].customer.name : '' %>
+                    </td>
+                    <td>
+                        <%= payments[k] ? payments[k].amount : '' %>
+                    </td>
+                </tr>
+                <% } %>
+                    <tr class="total">
+                        <td style="background-color: #f1c186; font-weight: 600;">Total</td>
+                        <td style="background-color: #f1c186; font-weight: 600;">
+                            <%= totalCreditAmount.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                        </td>
+                        <td>Total</td>
+                        <td>
+                            <%= totalDebitAmount.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                        </td>
+                    </tr>
+        </table>
+        <!-- Financial Summary -->
+        <table class="summary">
+            <% 
+                let saleAmountAllProducts = totalDieselAmount + totalPetrolAmount + totalMobileAmount
+            %>
+            <tr>
+                <td>Total Sale Amount</td>
+                <td><%= saleAmountAllProducts.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                    minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></td>
+            </tr>
+            <tr>
+                <td>Sales Cash</td>
+                <td>
+                    <%= closing.salesCash.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                        minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0 %>
+                </td>
+            </tr>
+            <tr>
+                <td>Debit Cash</td>
+                <td>
+                    <%= closing.debitCash.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                        minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0 %>
+                </td>
+            </tr>
+            <tr>
+                <td>Credit Amount</td>
+                <td>
+                    <%= closing.creditAmount.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                        minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0 %>
+                </td>
+            </tr>
+            <tr>
+                <td>Card Amount</td>
+                <td>
+                    <%= closing.cardAmount.toLocaleString('en-US', { style: 'currency' , currency: 'PKR' ,
+                        minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0 %>
+                </td>
+            </tr>
+            <tr class="highlight" style="background-color: #ec8484">
+                <td>Expense Amount</td>
+                <td>
+                    <%= totalExpense.toLocaleString('en-US', { style: 'currency' ,
+                        currency: 'PKR' , minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0 %>
+                </td>
+            </tr>
+            <tr class="highlight" >
+                <td>Cash In Hand</td>
+                <td>
+                    <%= (((closing.salesCash + closing.debitCash) - totalExpense)).toLocaleString('en-US', { style: 'currency' ,
+                        currency: 'PKR' , minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0 %>
+                </td>
+            </tr>
+        </table>

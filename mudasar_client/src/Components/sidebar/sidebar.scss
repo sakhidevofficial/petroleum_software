@@ -1,0 +1,81 @@
+//Desinging the Main Side Bar Component
+.sidebar {
+  width: 210px;
+  background-color: #fff;
+  transition: width 0.4s;
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #555 !important;
+  }
+  // Designing the bottom section of drawer
+  .bottom {
+    height: 92vh;
+    overflow: auto;
+    overflow-x: hidden;
+    border-right: 0.5px solid rgb(230, 227, 227);
+    //Designing the list inside the main side bar component
+    .list {
+      background-color: #fff;
+
+      //Styling the list Item category title
+      .title {
+        font-size: 10px;
+        font-weight: bold;
+        color: #999;
+        margin-top: 15px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+      }
+
+      //Styling the Icons of sidebar
+      .icon {
+        font-size: 20px;
+        min-width: 0;
+        margin: 0 5px;
+        // color: #7451f8;
+        color: #025feb;
+      }
+      .li {
+        padding: 4px;
+
+        //Designing of Text of List Item
+        .text {
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: #888;
+        }
+        //Styling the chevron icons
+        .chevron {
+          position: absolute;
+          font-style: 13px;
+          font-weight: 500;
+          color: #888;
+          right: 20px;
+        }
+      }
+
+      //Designing of nested list
+      .nestedli {
+        //Styling the text
+        .text {
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: #888;
+        }
+      }
+    }
+  }
+}
+
+@media  (max-width: 768px) {
+  .sidebar {
+      width: 0px;
+  }
+}

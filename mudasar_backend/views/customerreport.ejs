@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Statement</title>
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      margin: 0;
+      font-size: 11px; /* 12pt = 16px */
+    }
+
+    .report-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .main-title {
+      text-align: center;
+      font-size: 16px; /* 18pt */
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #2d3e50;
+    }
+
+    .section {
+      margin-bottom: 35px;
+    }
+
+    .section-title {
+        font-size: 15px; /* 15pt */
+      font-weight: 600;
+      margin-bottom: 15px;
+      padding-left: 12px;
+      border-left: 5px solid #2d3e50;
+      color: #2d3e50;
+    }
+
+    .section.blue .section-title {
+      border-color: #3f80ea;
+      color: #2a4ea1;
+    }
+
+    .section.red .section-title {
+      border-color: #e05c5c;
+      color: #a12a2a;
+    }
+
+    .section.green .section-title {
+      border-color: #49a35f;
+      color: #2b7a3f;
+    }
+
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 25px;
+     font-size: 11px; /* 12pt */
+    }
+
+    .styled-table.full td {
+      width: 25%;
+    }
+
+    .styled-table th,
+    .styled-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e3e3e3;
+      text-align: left;
+    }
+
+    .styled-table th {
+      background: #f1f3f5;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .styled-table tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    .bold-row {
+      font-weight: 700;
+      background-color: #eef5ff;
+      color: #1f3d7a;
+    }
+
+    .green-text {
+      background-color: #e4f8e8 !important;
+      color: #227044 !important;
+    }
+
+    .summary-box table td {
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="report-wrapper">
+    <div class="report-card">
+      <h1 class="main-title">Customer Statement</h1>
+
+      <div style="display: flex; justify-content: space-around">
+        <h4>Customer Name: <%= customer?.name %></h4>
+        <h4>Current Credit: <%= customer?.balance?.toLocaleString('en-US', { style: 'currency', currency: 'PKR' }) %></h4>
+      </div>
+
+      <hr />
+
+      <!-- CREDIT SECTION -->
+      <div class="section red">
+        <h2 class="section-title">Customer Credit</h2>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% credits?.records?.forEach(function(item) { %>
+              <tr>
+                <td><%= item.productName %></td>
+                <td><%= item.description %></td>
+                <td><%= item.date %></td>
+                <td><%= item?.amount?.toLocaleString('en-US', { style: 'currency', currency: 'PKR' }) %></td>
+              </tr>
+            <% }) %>
+            <tr class="bold-row">
+              <td colspan="3">Total Amount</td>
+              <td><%= credits?.grandTotal?.toLocaleString('en-US', { style: 'currency', currency: 'PKR' }) %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ADVANCE / DEBIT SECTION -->
+      <div class="section blue">
+        <h2 class="section-title">Advance - Debit</h2>
+        <table class="styled-table full">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Debit</th>
+              <th>Date</th>
+              <th>Advance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let i = 0; i < Math.max((payments?.records?.length || 0), (advances.length || 0)); i++) { %>
+              <tr>
+                <td><%= payments.records[i]?.date || '-' %></td>
+                <td><%= payments.records[i]?.payingAmount?.toLocaleString('en-US', { style: 'currency', currency: 'PKR' }) || '-' %></td>
+                <td><%= advances[i]?.date || '-' %></td>
+                <td><%= advances[i]?.amount?.toLocaleString('en-US', { style: 'currency', currency: 'PKR' }) || '-' %></td>
+              </tr>
+            <% } %>
+            <tr class="bold-row">
+              <td>Totals</td>
+              <td><%= payments?.grandTotal?.toLocaleString('en-US', { style: 'currency', currency: 'PKR' }) %></td>
+              <td>Totals</td>
+              <td><%= advances?.grandTotal?.toLocaleString('en-US', { style: 'currency', currency: 'PKR' }) %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SUMMARY SECTION -->
+      <div class="section green">
+        <h2 class="section-title">Summary</h2>
+        <div class="summary-box">
+          <table class="styled-table" style="max-width: 400px;">
+            <tbody>
+              <tr><td>Credit</td><td><%= credits.grandTotal %></td></tr>
+              <tr><td>Advance</td><td><%= (advances.grandTotal || 0); %></td></tr>
+              <tr><td><strong>Total Credit</strong></td><td><strong><%= ((credits.grandTotal || 0 ) + (advances.grandTotal  || 0)); %></strong></td></tr>
+              <tr><td><strong>Last Credit</strong></td><td><strong><%= lastAmount %></strong></td></tr>
+              <tr><td>Debit</td><td><%= payments.grandTotal %></td></tr>
+              <tr class="bold-row green-text">
+                <td>Remaining</td>
+                <td><%= ((lastAmount || 0) + (credits.grandTotal || 0) + (advances.grandTotal || 0) - (payments.grandTotal || 0)) %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

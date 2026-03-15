@@ -1,0 +1,20 @@
+.main {
+  display: flex;
+  height: calc(100vh - 51px);
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(163, 162, 162);
+  }
+  .appContainer {
+    flex: 5;
+    overflow-y: auto;
+  }
+}
