@@ -1,0 +1,96 @@
+//DESINGING THE NAVBAR COMPONENT
+.navbar {
+  height: 50px;
+  border-bottom: 0.5px solid rgb(231, 228, 228);
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+  
+
+  //Designing the wrapper within the flex
+  .wrapper {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    justify-content: space-between;
+
+    //Designing of Top Section in side bar
+    .top {
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      //Creating styling for Menu Open button
+      .sidebarBtnOpen {
+          opacity: 0%;
+          transition: opacity 2s;
+      }
+      .brand {
+        font-size: 20px;
+        font-weight: bold;
+        color: #025feb;
+        cursor: pointer;
+        text-decoration: none;
+      }
+    }
+
+    //Designing the items within the wrapper
+    .items {
+      display: flex;
+      align-items: center;
+
+     
+      //Designing the each item separatly
+      .item {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        position: relative;
+
+        //Styling icons in the items
+        .icon {
+          font-size: 20px;
+        }
+
+        //styling avatar profile pic in navbar
+        .avatar {
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+        }
+
+        //Styling the counter badge
+        .counter {
+          width: 15px;
+          height: 15px;
+          background-color: red;
+          border-radius: 50%;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          font-weight: bold;
+          position: absolute;
+          top: -5px;
+          right: -5px;
+        }
+      }
+    }
+  }
+}
+
+@media  (max-width: 768px) {
+  .navbar {
+    .wrapper {
+      .top {
+        .sidebarBtnOpen {
+          opacity: 100%;
+        }
+      }
+    }
+  }
+}

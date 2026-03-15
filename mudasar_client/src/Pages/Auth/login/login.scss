@@ -1,0 +1,45 @@
+//Designing of Login component
+.login {
+  //Designing of login Container inside the login component
+  .loginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 51px);
+  }
+}
+//Designing the login form
+.loginForm {
+  //Styling the Text Field
+  .textField {
+    &:focus {
+      border: red;
+    }
+  }
+
+
+  //AUTO FILL FORM STYLING
+  .MuiOutlinedInput-root {
+    color: #333;
+    background-color: transparent;
+
+    //Styling MUI Text Field on auto compelete
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
+      transition: background-color 600000s 0s, color 600000s 0s;
+    }
+    input[data-autocompleted] {
+      background-color: transparent !important;
+    }
+  }
+        
+  //Styling forgot password link
+  .forgotPassword {
+    margin: 10px 0px;
+  }
+  //Styling the login button
+  .loginBtn {
+    color: white;
+  }
+}

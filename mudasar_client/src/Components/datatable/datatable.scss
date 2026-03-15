@@ -1,0 +1,174 @@
+// .datatable {
+//   height: 415px;
+//   padding: 10px 20px 10px 20px;
+//   margin: 0px 0 0px 0;
+
+  
+//   ::-webkit-scrollbar {
+//     // width: 2px !important;
+//     height: 4px !important;
+//   }
+
+//   ::-webkit-scrollbar-track {
+//     background-color: #303134 !important;
+//   }
+//   ::-webkit-scrollbar-thumb {
+//     background-color: #555 !important;
+//   }
+
+//   //Designing the Image Cell of table
+//   .cellWithImg {
+//     display: flex;
+//     align-items: center;
+
+//     //Styling the img
+//     .cellImg {
+//       width: 32px;
+//       height: 32px;
+//       border-radius: 50%;
+//       object-fit: cover;
+//       margin-right: 20px;
+//     }
+//   }
+
+//   //Designing the Cell of Status
+//   .cellWithStatus {
+//     padding: 5px;
+//     border-radius: 5px;
+
+//     //Styling active status
+//     &.active {
+//       color: green;
+//       background-color: rgba(0, 128, 0, 0.05);
+//     }
+
+//     //Styling pending status
+//     &.pending {
+//       color: goldenrod;
+//       background-color: rgba(255, 217, 0, 0.05);
+//     }
+
+//     //Styling passive status
+//     &.passive {
+//       color: crimson;
+//       background-color: rgba(255, 0, 0, 0.05);
+//     }
+//   }
+
+//   //Designing the Cell of Actions
+//   .cellAction {
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
+
+//     //Styling the view button
+//     .viewButton {
+//       padding: 2px 5px;
+//       border-radius: 5px;
+//       color: darkblue;
+//       border: 1px dotted rgba(0, 0, 139, 0.596);
+//       cursor: pointer;
+//     }
+
+//     //Styling the Delete button
+//     .deleteButton {
+//       padding: 2px 5px;
+//       border-radius: 5px;
+//       color: crimson;
+//       border: 1px dotted rgba(220, 20, 60, 0.6);
+//       cursor: pointer;
+//     }
+//   }
+// }
+.datatable {
+  height: 415px;
+  padding: 10px 20px;
+  margin: 0;
+
+  // Scrollbar base
+  ::-webkit-scrollbar {
+    height: 4px;
+    transition: height 0.2s ease-in-out;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #303134;
+  
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #555;
+ 
+    height: 4px;
+    transition: height 0.2s ease-in-out;
+  }
+
+  // On hover over the datatable, increase scrollbar height
+  &:hover {
+    ::-webkit-scrollbar {
+      height: 10px !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      height: 10px !important;
+    }
+  }
+
+  // Table Image Cell
+  .cellWithImg {
+    display: flex;
+    align-items: center;
+
+    .cellImg {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+  }
+
+  // Status Cell Styles
+  .cellWithStatus {
+    padding: 5px;
+    border-radius: 5px;
+
+    &.active {
+      color: green;
+      background-color: rgba(0, 128, 0, 0.05);
+    }
+
+    &.pending {
+      color: goldenrod;
+      background-color: rgba(255, 217, 0, 0.05);
+    }
+
+    &.passive {
+      color: crimson;
+      background-color: rgba(255, 0, 0, 0.05);
+    }
+  }
+
+  // Action Cell Styles
+  .cellAction {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .viewButton {
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: darkblue;
+      border: 1px dotted rgba(0, 0, 139, 0.6);
+      cursor: pointer;
+    }
+
+    .deleteButton {
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: crimson;
+      border: 1px dotted rgba(220, 20, 60, 0.6);
+      cursor: pointer;
+    }
+  }
+}

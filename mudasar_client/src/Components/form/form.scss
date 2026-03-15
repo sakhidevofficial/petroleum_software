@@ -1,0 +1,107 @@
+//Style File input button
+.fileInput {
+  border: 1px solid #555;
+  padding: 10px 10px 10px 10px;
+  border-radius: 4px;
+  background: transparent;
+  width: 100%;
+  position: relative;
+}
+.fileInput::-webkit-file-upload-button {
+    background-color: #303134;
+    color: #9c9c9c;
+    padding: 12px;
+    box-shadow: none;
+    border: none;
+    position: absolute;
+    right: -5px;
+    top: 0;
+
+}
+
+// AVATAR INPUT STYLING 
+.avatarInputWrapper {
+  background-image: url("../../../public/img/avatarfilelight.png");
+  background-size: cover;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+.avatarInput {
+  background: transparent;
+  color: transparent;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 50px;
+  width: 130px;
+  box-sizing: border-box;
+  transition: 0.5s;
+  opacity: 0;
+}
+.avatarInput:hover {
+  background: rgba(0,0,0,0.2);
+  opacity: 1;
+}
+.avatarInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.avatarInput:before {
+  content: "\f030";
+  font-family: FontAwesome;
+  font-size: 20px;
+  color: #fff;
+  padding-top: 12px;
+  display: flex; /* Add flex display */
+  justify-content: center; /* Center horizontally */
+
+}
+.css-1ea1xhh-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 9px 14px;
+}
+//PHONE INPUT CODING
+  //React Contact Input DESIGNING
+  .react-tel-input .form-control {
+    background: transparent;
+    color: #333;
+    width: -webkit-fill-available;
+    height: 40px;
+   
+  }
+  .react-tel-input .flag-dropdown {
+    height: 40px;
+    background-color: transparent;
+    border-right: none;
+   
+
+  }
+  .react-tel-input .selected-flag:hover {
+    height: 40px;
+    background-color: transparent;
+ 
+  }
+  .react-tel-input .selected-flag {
+    height: 40px;
+   
+    background-color: transparent !important;
+  }
+
+  .react-tel-input .flag-dropdown {
+    background-color: transparent !important;
+  }
+  .react-tel-input .country-list {
+    position: relative;
+  }
+.form {
+  width: 100%;
+  .formInput {
+    // margin: 0px 10px 0px 10px;
+  }
+
+}
+

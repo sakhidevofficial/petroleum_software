@@ -1,0 +1,95 @@
+.posCard {
+    // flex: 1;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    border-radius: 4px;
+    margin-top: 20px;
+    // margin-right: 10px;
+    padding-left: 20px;
+    // padding: 0 20px;
+}
+.itemsForm {
+    flex: 1;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    border-radius: 4px;
+    margin: 5px;
+    padding: 10px 20px;
+    height: 550px;
+}
+.selectedProduct{
+    color: white;
+    border-radius: 50%;
+    background-color: green;
+    width: 24px;
+    // float: right;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 999;
+}
+.itemsContainer {
+    padding-top: 5px;
+    height: 240px;
+    overflow-y: scroll;
+}
+.itemBox {
+   
+    box-shadow: 1px 0px 2px 0px rgba(201, 201, 201, 0.47);
+    padding: 7px 5px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+.itemWrapperBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.innerItemBox {
+    display: flex;
+    align-items: center;
+}
+.productItems {
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    border-radius: 4px;
+    text-align: center;
+    padding: 10px 20px;
+    position: relative;
+   
+}
+
+.productGrid {
+    padding-top: 15px;
+    margin: 0 10px;
+}
+
+.productGrid h4 {
+    margin-bottom: 10px;
+}
+::-webkit-scrollbar {
+    width: 4px !important;
+    height: 4px !important;
+  }
+
+::-webkit-scrollbar:hover {
+    width: 15px !important;
+    height: 15px !important
+}
+  ::-webkit-scrollbar-track {
+    background-color: #bfbfc2 !important;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #353434 !important;
+  }
+
+  ::-webkit-scrollbar-track:hover {
+    // background-color: #a9a9ad !important; /* Slightly darker track on hover */
+    width: 8px !important;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    // background-color: #1f1f1f !important; /* Slightly darker thumb on hover */
+    width: 8px !important;
+    cursor: pointer
+  }

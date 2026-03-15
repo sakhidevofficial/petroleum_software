@@ -1,0 +1,33 @@
+.table {
+  //Designing the cellWrapper
+  .cellWrapper {
+    display: flex;
+    align-items: center;
+
+    //styling the image inside the wrapper
+    .image {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  }
+
+  //Styling the status
+  .status {
+    padding: 5px;
+    border-radius: 5px;
+
+    //For Status Approved
+    &.Approved {
+      color: green;
+      background-color: rgba(0, 128, 0, 0.151);
+    }
+
+    //For status Pending
+    &.Pending {
+      color: goldenrod;
+      background-color: rgba(189, 189, 3, 0.103);
+    }
+  }
+}

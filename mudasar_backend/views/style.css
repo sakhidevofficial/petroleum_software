@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-left: 200px;
+    margin-right: 200px;
+    /* background-color: red; */
+}
+
+.header {
+   display: flex;
+    /* justify-content: center; */
+    padding: 30px 30px;
+}
+ 
+
+.header-heading{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-left: 30px;
+    margin-top: 50px;
+    width: 300px
+}
+.info-labels {
+    font-family: sans-serif;
+    font-weight: 600;
+    margin: 5px 0px;
+}
+
+.values {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-values {
+    font-family: sans-serif;
+    /* font-weight: 600; */
+    margin: 3px 0px;
+}
+
+table {
+    width: 100%;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 10px;
+}
+.products {
+    background-color:cadetblue;
+    color: white
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr {
+    text-align: center;
+}
+
+.expense {
+    background-color: rgb(231, 154, 154);
+}
+
+.recovery {
+    background-color: rgb(156, 226, 156);
+}
+
+.credit-customers {
+    background-color: #f1c186;
+}
+.stamp {
+    position: absolute;
+    right: 200px;
+    bottom: 50px;
+    font-weight: 600;
+    text-align: center;
+}

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monthly Sales Report</title>
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      margin: 0;
+       font-size: 11px; /* 12pt = 16px */
+    }
+
+    .report-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .report-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .main-title {
+      text-align: center;
+      font-size: 16px; /* 18pt */
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #2d3e50;
+    }
+
+    .header-info {
+      margin-bottom: 30px;
+      page-break-after: avoid;
+    }
+
+    .header-info p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .section {
+      margin-bottom: 35px;
+      page-break-inside: avoid;
+    }
+
+    .section-title {
+     font-size: 15px; /* 15pt */
+      font-weight: 600;
+      margin-bottom: 15px;
+      padding-left: 12px;
+      border-left: 5px solid #2d3e50;
+      color: #2d3e50;
+      page-break-after: avoid;
+    }
+
+    .section.blue .section-title {
+      border-color: #3f80ea;
+      color: #2a4ea1;
+    }
+
+    .section.red .section-title {
+      border-color: #e05c5c;
+      color: #a12a2a;
+    }
+
+    .section.green .section-title {
+      border-color: #49a35f;
+      color: #2b7a3f;
+    }
+
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 25px;
+     font-size: 11px; /* 12pt */
+      page-break-inside: auto;
+    }
+
+    .styled-table.full td {
+      width: 25%;
+    }
+
+    .styled-table th,
+    .styled-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e3e3e3;
+      text-align: left;
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 25px;
+        page-break-inside: auto; /* Allow table to break across pages */
+        font-size: 11px; /* 12pt */
+    }
+
+    .styled-table thead {
+        display: table-header-group; /* Headers will repeat on each page */
+    }
+
+    .styled-table tr {
+        page-break-inside: avoid; /* Keep rows together */
+    }
+
+    .styled-table th {
+      background: #f1f3f5;
+      font-weight: 600;
+      color: #333;
+      font-size: 13px; /* 12pt */
+    }
+
+    .styled-table tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    .bold-row {
+      font-weight: 700;
+      background-color: #eef5ff;
+      color: #1f3d7a;
+      font-size: 12px; /* 12pt */
+    }
+
+    .green-text {
+      background-color: #e4f8e8 !important;
+      color: #227044 !important;
+    }
+
+    .blue-text {
+      background-color: #eef5ff !important;
+      color: #1f3d7a !important;
+    }
+
+    .red-text {
+      background-color: #fce8e8 !important;
+      color: #a12a2a !important;
+    }
+
+    .numeric {
+      text-align: right;
+      /* font-family: monospace; */
+    }
+
+    .page-break {
+      page-break-after: always;
+    }
+
+    .avoid-break {
+      page-break-inside: avoid;
+    }
+
+    .first-page-tables {
+      page-break-inside: avoid;
+      margin-bottom: 30px;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: none;
+        font-size: 16px;
+      }
+
+      .report-card {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 20px;
+      }
+
+      .main-title {
+        font-size: 18px;
+      }
+
+      .section-title {
+        font-size: 15px;
+      }
+
+      .styled-table {
+        margin-top: 20px;
+        page-break-inside: auto;
+      }
+
+      .styled-table th,
+      .styled-table td {
+        padding: 10px 14px;
+        font-size: 12px;
+        width: auto;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      .header-info p {
+        font-size: 15px; /* 12pt */
+      }
+
+      thead {
+        display: table-header-group !important;
+      }
+
+      tfoot {
+        display: table-footer-group !important;
+      }
+
+      tr {
+        page-break-inside: avoid !important;
+      }
+
+      table {
+        page-break-inside: auto;
+      }
+    }
+
+    @page {
+      size: Legal;
+      margin: 10mm 10mm;
+    }
+  </style>
+</head>
+<body>
+  <div class="report-wrapper">
+    <div class="report-card">
+            <div class="header-info">
+                <div>
+                    <h1 class="main-title">Monthly Sales Report</h1>
+                    <div class="date-range">
+                        From: <%= startDate %> To: <%= endDate %>
+                    </div>
+                </div>
+            </div>
+
+            <% 
+            // Define roundValue function at the beginning
+            const roundValue = function(value, decimals) {
+                decimals = decimals || 2;
+                if (isNaN(value)) return '0.00';
+                const factor = Math.pow(10, decimals);
+                return (Math.round(value * factor) / factor).toFixed(decimals);
+            };
+            
+            // Group products
+            const fuelProducts = ["petrol", "diesel"];
+            const grouped = products.reduce((acc, item) => {
+                const productName = item.productName || 'Unknown';
+                acc[productName] = acc[productName] || [];
+                acc[productName].push(item);
+                return acc;
+            }, {});
+            
+            const fuelGroup = {};
+            const otherGroup = {};
+            Object.entries(grouped).forEach(([name, items]) => {
+                if (fuelProducts.includes(name.toLowerCase())) {
+                    fuelGroup[name] = items;
+                } else {
+                    otherGroup[name] = items;
+                }
+            });
+            
+            // Initialize totals
+            let fuelTotalQty = 0;
+            let fuelTotalAmt = 0;
+            let fuelTotalProfit = 0;
+            %>
+
+            <!-- Product Sales -->
+            <div class="section avoid-break">
+                <h2 class="section-title">Product Sales</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th class="product-header">Product Name</th>
+                            <th class="numeric">Quantity</th>
+                            <th class="numeric">Price</th>
+                            <th class="numeric">Amount</th>
+                            <th class="numeric">Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% Object.entries(fuelGroup).forEach(([productName, items]) => { %>
+                            <% items.forEach((item, index) => { 
+                                const quantity = item.quantity || 0;
+                                const sellingPrice = item.sellingPrice || 0;
+                                const costPrice = item.costPrice || 0;
+                                const amount = item.amount || 0;
+                                const profit = (sellingPrice - costPrice) * quantity;
+                                
+                                fuelTotalQty += quantity;
+                                fuelTotalAmt += amount;
+                                fuelTotalProfit += profit;
+                            %>
+                            <tr>
+                                <% if (index === 0) { %>
+                                <td class="product-cell" rowspan="<%= items.length %>">
+                                    <%= productName %>
+                                </td>
+                                <% } %>
+                                <td class="numeric"><%= roundValue(quantity) %></td>
+                                <td class="numeric"><%= roundValue(sellingPrice) %></td>
+                                <td class="numeric"><%= roundValue(amount) %></td>
+                                <td class="numeric"><%= roundValue(profit) %></td>
+                            </tr>
+                            <% }); %>
+                        <% }); %>
+
+                        <!-- Fuel totals -->
+                        <tr class="bold-row">
+                            <td>Fuel Totals</td>
+                            <td class="numeric"><%= roundValue(fuelTotalQty) %></td>
+                            <td></td>
+                            <td class="numeric"><%= roundValue(fuelTotalAmt) %></td>
+                            <td class="numeric"><%= roundValue(fuelTotalProfit) %></td>
+                        </tr>
+
+                        <% 
+                        let otherTotalQty = 0;
+                        let otherTotalAmt = 0;
+                        let otherTotalProfit = 0;
+                        %>
+
+                        <!-- Other products -->
+                        <% Object.entries(otherGroup).forEach(([productName, items]) => { %>
+                            <% items.forEach((item, index) => {
+                                const quantity = item.quantity || 0;
+                                const sellingPrice = item.sellingPrice || 0;
+                                const costPrice = item.costPrice || 0;
+                                const amount = item.amount || 0;
+                                const profit = (sellingPrice - costPrice) * quantity;
+                                
+                                otherTotalQty += quantity;
+                                otherTotalAmt += amount;
+                                otherTotalProfit += profit;
+                            %>
+                            <tr>
+                                <% if (index === 0) { %>
+                                <td class="product-cell" rowspan="<%= items.length %>">
+                                    <%= productName %>
+                                </td>
+                                <% } %>
+                                <td class="numeric"><%= roundValue(quantity) %></td>
+                                <td class="numeric"><%= roundValue(sellingPrice) %></td>
+                                <td class="numeric"><%= roundValue(amount) %></td>
+                                <td class="numeric"><%= roundValue(profit) %></td>
+                            </tr>
+                            <% }); %>
+                        <% }); %>
+
+                        <!-- Other totals -->
+                        <tr class="bold-row">
+                            <td>Other Totals</td>
+                            <td class="numeric"><%= roundValue(otherTotalQty) %></td>
+                            <td></td>
+                            <td class="numeric"><%= roundValue(otherTotalAmt) %></td>
+                            <td class="numeric"><%= roundValue(otherTotalProfit) %></td>
+                        </tr>
+
+                        <!-- Gross Total -->
+                        <tr class="bold-row">
+                            <td colspan="3">Gross Total</td>
+                            <td class="numeric"><%= roundValue(fuelTotalAmt + otherTotalAmt) %></td>
+                            <td class="numeric"><%= roundValue(fuelTotalProfit + otherTotalProfit) %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Debit - Credit -->
+            <div class="section blue avoid-break">
+                <h2 class="section-title">Debit - Credit</h2>
+                <table class="styled-table full">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th class="numeric">Amount</th>
+                            <th>Title</th>
+                            <th class="numeric">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total Customer Debit</td>
+                            <td class="numeric"><%= roundValue(totalCustomerDebit) %></td>
+                            <td>Total Customer Credit</td>
+                            <td class="numeric"><%= roundValue(totalCustomerCredit) %></td>
+                        </tr>
+                        <tr>
+                            <td>Total Staff Debit</td>
+                            <td class="numeric"><%= roundValue(totalEmployeeAdvanceReturn) %></td>
+                            <td>Total Staff Credit</td>
+                            <td class="numeric"><%= roundValue(totalEmployeeAdvance) %></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>Total Customer Advance</td>
+                            <td class="numeric"><%= roundValue(totalCustomerAdvance) %></td>
+                        </tr>
+                        <tr class="bold-row">
+                            <td>Recovery</td>
+                            <td class="numeric"><%= roundValue(totalEmployeeAdvanceReturn + totalCustomerDebit) %></td>
+                            <td>Total Credit</td>
+                            <td class="numeric"><%= roundValue(totalCustomerCredit + totalEmployeeAdvance + totalCustomerAdvance) %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Expense Section -->
+            <div class="section red avoid-break">
+                <h2 class="section-title">Expense & Total Purchase</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th class="numeric">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total Expense</td>
+                            <td class="numeric"><%= roundValue(totalExpenses) %></td>
+                        </tr>
+                        <tr>
+                            <td>Supplier Payments</td>
+                            <td class="numeric"><%= roundValue(totalSupplierPaymentAmount) %></td>
+                        </tr>
+                        <tr class="bold-row">
+                            <td>Total</td>
+                            <td class="numeric"><%= roundValue(totalSupplierPaymentAmount + totalExpenses) %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Stock Section -->
+            <div class="section green avoid-break" style="margin-top: 100px !important">
+                <h2 class="section-title">Stock</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th class="numeric">Current Stock</th>
+                            <th class="numeric">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                        let remainingStockAmount = 0;
+                        endDateProductStocks.forEach(item => {
+                            const stock = item.newStock || 0;
+                            const amount = item.amount || 0;
+                            remainingStockAmount += amount;
+                        %>
+                        <tr>
+                            <td><%= item.productName %></td>
+                            <td class="numeric"><%= roundValue(stock) %></td>
+                            <td class="numeric"><%= roundValue(amount) %></td>
+                        </tr>
+                        <% }); %>
+                        <tr class="bold-row">
+                            <td colspan="2">Total</td>
+                            <td class="numeric"><%= roundValue(remainingStockAmount) %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Summary -->
+            <div class="section green avoid-break" style="margin-top: 50px !important">
+                <h2 class="section-title">Summary</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th class="numeric">Quantity</th>
+                            <th class="numeric">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">Gross Sale Profit</td>
+                            <td class="numeric"><%= roundValue(fuelTotalProfit + otherTotalProfit) %></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Profit Price Change</td>
+                            <td class="numeric"><%= roundValue(priceChangeProfit) %></td>
+                        </tr>
+                        
+                        <!-- Product Gains -->
+                        <% if (gain && gain.length) { %>
+                            <% gain.forEach(function(product) { %>
+                                <tr>
+                                    <td><%= product.productName || 'Unknown Product' %></td>
+                                    <td class="numeric"><%= roundValue(product.totalGain) %></td>
+                                    <td class="numeric"><%= roundValue(product.totalAmount) %></td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="3">No gain data available</td>
+                            </tr>
+                        <% } %>
+
+                        <tr>
+                            <td colspan="2">Expense</td>
+                            <td class="numeric"><%= roundValue(totalExpenses) %></td>
+                        </tr>
+                        <tr class="bold-row">
+                            <td colspan="2">Gross Total Profit</td>
+                            <td class="numeric">
+                                <% 
+                                var totalGainAmount = 0;
+                                if (gain && gain.length) {
+                                    totalGainAmount = gain.reduce(function(sum, p) {
+                                        return sum + (p.totalAmount || 0);
+                                    }, 0);
+                                }
+                                %>
+                                <%= roundValue(
+                                    (fuelTotalProfit || 0) + 
+                                    (otherTotalProfit || 0) + 
+                                    (priceChangeProfit || 0) 
+                                ) %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Zakat (2.5%)</td>
+                            <td class="numeric">
+                                <%= roundValue(
+                                    ((fuelTotalProfit || 0) + (otherTotalProfit || 0) +  (priceChangeProfit || 0)) / 100 * 2.5 
+                                ) %>
+                            </td>
+                        </tr>
+                        <tr class="bold-row green-text">
+                            <td colspan="2">Net Profit</td>
+                            <td class="numeric">
+                                <%= roundValue(
+                                    ((fuelTotalProfit || 0) + 
+                                    (otherTotalProfit || 0) + 
+                                    (priceChangeProfit || 0)) - ((((fuelTotalProfit || 0) + (otherTotalProfit || 0) +  (priceChangeProfit || 0)) / 100 * 2.5) + (totalExpenses || 0))
+                                ) %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+       </div>
+  </div>
+
+
+</body>
+</html>

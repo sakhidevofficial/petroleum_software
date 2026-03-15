@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost:5000/public/css/style.css">
+    <title>Monthly Report</title>
+</head>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-left: 50px;
+    margin-right: 100px;
+    /* background-color: red; */
+}
+
+.header {
+   display: flex;
+    /* justify-content: center; */
+    padding: 30px 30px;
+}
+ 
+
+.header-heading{
+    text-align: center;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-left: 30px;
+    margin-top: 50px;
+    width: 300px
+}
+.info-labels {
+    font-family: sans-serif;
+    font-weight: 600;
+    margin: 5px 0px;
+}
+
+.values {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-values {
+    font-family: sans-serif;
+    /* font-weight: 600; */
+    margin: 3px 0px;
+}
+
+table {
+    width: 100%;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 10px;
+}
+.products {
+    background-color:cadetblue;
+    color: white
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr {
+    text-align: center;
+}
+
+.expense {
+    background-color: rgb(231, 154, 154);
+}
+
+.recovery {
+    background-color: rgb(156, 226, 156);
+}
+
+.stamp {
+    position: absolute;
+    right: 200px;
+    bottom: 50px;
+    font-weight: 600;
+    text-align: center;
+}
+</style>
+<body> 
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="http://localhost:5000/public/reports/images/images.png" alt="" width="130px" height="100px">
+            </div>
+            <div class="header-heading">
+                <h1 class="title">Mudasar Filling Station</h1>
+            </div>
+        </div>
+
+        <div class="info">
+            <div class="info1">
+                <div class="info-labels">Title:</div>
+                <span class="info-values">Monthly Report</span>
+            </div>
+            <div class="info2">
+                <div class="info-labels">Start Date: </div>
+                <span class="info-values"><%= startDate %></span>
+            </div>
+            <div class="info3">
+                <div class="info-labels">End Date: </div>
+                <span class="info-values"><%= endDate %></span>
+                
+            </div>
+            <div class="info4">
+                <div class="info-labels">Total Days: </div>
+                <span class="info-values">30</span>
+            </div>
+        </div>
+
+        <table>
+            <thead class="products">
+                <th>Description</th>
+                <th>Qty/Liters</th>
+                <th>Amount</th>
+                <th>Profit/Loss</th>
+            </thead>
+           
+
+        <div class="stamp">
+            <div>Manager</div>
+            <div>Mudasar Filling Station</div>
+        </div>
+    </div>
+</body>
+
+</html>
